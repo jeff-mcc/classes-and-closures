@@ -187,10 +187,13 @@ function secretNumber() {
 */
 
 function timeOutCounter() {
-  for (var i = 0; i <= 5; i++) {
+  for (let i = 0; i <= 5; i++) {
+    function inner(j){
     setTimeout(function() {
-      console.log(i);
-    }, i * 1000);
+      console.log(j)
+    }, j * 1000);
+    }
+    inner(i)
   }
 }
 timeOutCounter();

@@ -92,7 +92,41 @@ class Manager extends Employee{
   Call your new class ProgressiveManager
 */
 
-//Code Here
+class ProgressiveManager extends Manager{
+  constructor(firstName,lastName,email,age){
+    super(firstName,lastName,email,age)
+    this.title = 'Not a manager';
+    this.bonus = 0;
+  }
+  hire(newEmployee){
+    super.hire(newEmployee)
+    let count = this.reports.length;
+    this.title = this.titleUpdate(count);
+    return this
+  }
+  fire(idx){
+    super.fire(idx)
+    let count = this.reports.length;
+    this.bonus += 100;
+    this.title = this.titleUpdate(count);
+    return this
+  }
+  titleUpdate(count){
+    if (count>0 && count<=3){
+      return 'Barely Manager';
+    } else if(count>3 && count<=10){
+      return 'Mostly Manager';
+    } else if(count>10 && count<=50){
+      return 'Manager';
+    } else if(count>50 && count<=100){
+      return 'Manager Plus';
+    } else if(count>100){
+      return 'Bestest Manager';
+    } else{
+      return 'Not a manager';
+    }
+  }
+}
 
 
 
@@ -119,6 +153,38 @@ class Manager extends Employee{
         - The anonymous function should decrease wear_and_tear_count by 10, and set needs_reboot to false
 */
 
-//Code Here
+class Machine{
+  constructor(){
+    this.widgets_made_count = 0;
+    this.wear_and_tear_count = 0;
+    this.needs_reboot = false;
+    // console.log(this.wear_and_tear_count)
+  }
+  makeWidgets(num){
+    this.widgets_made_count += num;
+    let ev50 = this.widgets_made_count/50;
+    this.wear_and_tear_count = Math.floor(ev50);
+    // console.log(this.wear_and_tear_count)
+  }
+  fixMachine(){
+    this.needs_reboot = true;
+    // console.log(this.needs_reboot)
+  }
+  reboot(){
+    // console.log(this)
+    let newThis = this;
+    return function(){
+      newThis.wear_and_tear_count -= 10;
+      newThis.needs_reboot = false;
+      // console.log(newThis.wear_and_tear_count)
+      // console.log(newThis.needs_reboot)
+    }
+  }
+}
+let machine = new Machine();
+machine.makeWidgets(5000);
+machine.fixMachine();
 
-
+let rebootComplete = machine.reboot();
+// console.log(machine.needs_reboot)
+rebootComplete()
